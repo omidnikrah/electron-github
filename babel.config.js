@@ -33,7 +33,6 @@ module.exports = api => {
     plugins: [
       // Stage 0
       require('@babel/plugin-proposal-function-bind'),
-
       // Stage 1
       require('@babel/plugin-proposal-export-default-from'),
       require('@babel/plugin-proposal-logical-assignment-operators'),
@@ -47,7 +46,7 @@ module.exports = api => {
         { loose: false }
       ],
       require('@babel/plugin-proposal-do-expressions'),
-
+      
       // Stage 2
       [require('@babel/plugin-proposal-decorators'), { legacy: true }],
       require('@babel/plugin-proposal-function-sent'),

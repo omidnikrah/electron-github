@@ -13,6 +13,7 @@ import webpack from 'webpack';
 import chalk from 'chalk';
 import merge from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 
@@ -70,74 +71,8 @@ export default merge.smart(baseConfig, {
         }
       },
       {
-        test: /\.global\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /^((?!\.global).)*\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
-          }
-        ]
-      },
-      // SASS support - compile all .global.scss files and pipe it to style.css
-      {
-        test: /\.global\.(scss|sass)$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
-      },
-      // SASS support - compile all other .scss files and pipe it to style.css
-      {
-        test: /^((?!\.global).)*\.(scss|sass)$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       // WOFF Font
       {
@@ -229,7 +164,12 @@ export default merge.smart(baseConfig, {
 
     new webpack.LoaderOptionsPlugin({
       debug: true
-    })
+    }),
+
+    new MiniCssExtractPlugin({
+      filename: 'style.css'
+    }),
+
   ],
 
   node: {

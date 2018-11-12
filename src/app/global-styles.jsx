@@ -53,4 +53,8 @@ export default createGlobalStyle`
     font-family: 'SegoeUI', sans-serif;
     overflow-y: hidden;
   }
+  * {
+    box-sizing: border-box;
+    user-select: none;
+  }
 `;

@@ -57,4 +57,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     user-select: none;
   }
+  span, p {
+    cursor: default;
+  }
 `;

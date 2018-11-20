@@ -10,21 +10,21 @@ import UserItem from './components/UserItem';
 type Props = {};
 
 const SEARCH_USER = gql`
-{
-  search (query: "omid", type: USER, first: 100){
-    edges {
-      node {
-        ... on User {
-          name
-          avatarUrl
-      		repositories {
-            totalCount
+  query ($username: String!) {
+    search (query: $username, type: USER, first: 100){
+      edges {
+        node {
+          ... on User {
+            name
+            avatarUrl
+            repositories {
+              totalCount
+            }
           }
         }
       }
     }
   }
-}
 `;
 
 export default class HomePage extends Component<Props> {
@@ -35,18 +35,6 @@ export default class HomePage extends Component<Props> {
       <HomeStyles>
         <img className="github--logo" src={githubLogo} alt="GitHub logo" />
         <h2 className="title">Type Username, Press Enter</h2>
-        <Query query={SEARCH_USER}>
-          {({ loading, error, data }) => {
-            if (loading) return 'Loading...';
-            if (error) return `Error! ${error.message}`;
-
-            const userList = data.search.edges.map((user : any, index : any) => (
-              <UserItem name={user.node.name} key={index} />
-            ));
-            
-            return userList;
-          }}
-        </Query>
         <Form
           onSubmit={(values) => {
             console.log(values);
@@ -66,6 +54,18 @@ export default class HomePage extends Component<Props> {
             </form>
           )}
         />
+        <Query query={SEARCH_USER} variables={{ username: 'omid' }}>
+          {({ loading, error, data }) => {
+            if (loading) return 'Loading...';
+            if (error) return `Error! ${error.message}`;
+
+            const userList = data.search.edges.map((user : any, index : any) => (
+              <UserItem data={user.node} key={index} />
+            ));
+            
+            return <div className="search-result">{userList}</div>;
+          }}
+        </Query>
       </HomeStyles>
     );
   }

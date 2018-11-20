@@ -60,4 +60,10 @@ export default styled.div`
       }
     }
   }
+  .search-result {
+    overflow-y: scroll;
+    height: 390px;
+    max-width: 400px;
+    margin: 30px auto 0;
+  }
 `;

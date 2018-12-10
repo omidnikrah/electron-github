@@ -52,6 +52,13 @@ export default createGlobalStyle`
     color: #444;
     font-family: 'SegoeUI', sans-serif;
     overflow-y: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  #root {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
   }
   * {
     box-sizing: border-box;

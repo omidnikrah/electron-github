@@ -6,6 +6,7 @@ export default styled.div`
   text-align: center;
   padding: 50px;
   position: relative;
+  height: 100%;
   .github--logo {
     width: 150px;
     display: block;
@@ -62,8 +63,21 @@ export default styled.div`
   }
   .search-result {
     overflow-y: scroll;
-    height: 390px;
+    height: 360px;
     max-width: 400px;
     margin: 30px auto 0;
+  }
+  .loading {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0px;
+    background: -moz-linear-gradient(top, rgba(250,250,250,0) 0%, rgba(250,250,250,0.02) 1%, rgba(250,250,250,0.85) 48%, rgba(250,250,250,1) 100%);
+    background: -webkit-linear-gradient(top, rgba(250,250,250,0) 0%,rgba(250,250,250,0.02) 1%,rgba(250,250,250,0.85) 48%,rgba(250,250,250,1) 100%);
+    background: linear-gradient(to bottom, rgba(250,250,250,0) 0%,rgba(250,250,250,0.02) 1%,rgba(250,250,250,0.85) 48%,rgba(250,250,250,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fafafa', endColorstr='#fafafa',GradientType=0 );
+    padding: 25px 50px;
+    line-height: 1;
+    width: 400px;
   }
 `;

@@ -67,4 +67,18 @@ export default createGlobalStyle`
   span, p {
     cursor: default;
   }
+  .fade-enter {
+    opacity: 0.01;
+  }
+  .fade-enter-active{
+    opacity: 1;
+    transition: opacity 350ms ease;
+  }
+  .fade-exit{
+    opacity: 1;
+  }
+  .fade-exit-active{
+    opacity: 0.01;
+    transition: opacity 350ms ease;
+  }
 `;

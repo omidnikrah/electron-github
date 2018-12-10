@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Form, Field } from 'react-final-form';
 import gql from 'graphql-tag';
 import { Query, withApollo } from 'react-apollo';
+import Loading from '../../components/Loading';
 import githubLogo from './assets/logo.svg';
 import HomeStyles from './styles';
 import UserItem from './components/UserItem';
@@ -143,7 +145,13 @@ class HomePage extends Component<Props, State> {
             </form>
           )}
         />
-        {loading && (<span className="loading">Loading...</span>)}
+        <TransitionGroup>
+          {loading && (
+            <CSSTransition timeout={350} classNames="fade">
+              <div className="loading"><Loading /></div>
+            </CSSTransition>
+          )}
+        </TransitionGroup>
         <div className="search-result" ref={this.resultElem}>
           {searchList.length > 0 &&
             searchList.map((searchItem: any, index: any) => (

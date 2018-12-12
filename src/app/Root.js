@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import { Switch, BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
@@ -33,7 +32,7 @@ const client = new ApolloClient({
 
 export default class Root extends Component<Props> {
   render() {
-    const { store, history } = this.props;
+    const { history } = this.props;
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>

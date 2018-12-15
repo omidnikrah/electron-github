@@ -67,6 +67,9 @@ export default createGlobalStyle`
   span, p {
     cursor: default;
   }
+  a {
+    text-decoration: none;
+  }
   .fade-enter {
     opacity: 0.01;
   }

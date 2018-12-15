@@ -31,6 +31,7 @@ const SEARCH_USER = gql`
         node {
           ... on User {
             name
+            login
             avatarUrl
             repositories {
               totalCount
@@ -145,7 +146,7 @@ class HomePage extends Component<Props, State> {
             </form>
           )}
         />
-        <TransitionGroup>
+        <TransitionGroup component={null}>
           {loading && (
             <CSSTransition timeout={350} classNames="fade">
               <div className="loading"><Loading /></div>

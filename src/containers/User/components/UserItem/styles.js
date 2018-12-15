@@ -36,7 +36,6 @@ export default styled.div`
       font-size: 15px;
       color: #444;
       margin-left: 20px;
-      cursor: pointer;
     }
   }
   .repositories-count {
@@ -49,6 +48,5 @@ export default styled.div`
     min-height: 35px;
     display: inline-block;
     min-width: 35px;
-    cursor: pointer;
   }
 `;

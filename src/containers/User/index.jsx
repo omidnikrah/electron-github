@@ -5,13 +5,13 @@ import { Form, Field } from 'react-final-form';
 import gql from 'graphql-tag';
 import { Query, withApollo } from 'react-apollo';
 import Loading from '../../components/Loading';
-import githubLogo from './assets/logo.svg';
 import HomeStyles from './styles';
 import UserItem from './components/UserItem';
+import UserSidebar from '../../components/UserSidebar';
 
 type Props = {
   client: any,
-  match : any,
+  match: any
 };
 
 type State = {
@@ -60,10 +60,13 @@ const GET_USER = gql`
 
 class UserPage extends Component<Props, State> {
   render() {
-    const { match: { params: { username } } } = this.props;
+    const {
+      match: {
+        params: { username }
+      }
+    } = this.props;
     return (
       <HomeStyles>
-        
         <Query query={GET_USER} variables={{ username }}>
           {({ loading, error, data }) => {
             if (loading) return 'Loading...';
@@ -71,27 +74,10 @@ class UserPage extends Component<Props, State> {
 
             if (data) {
               const { repositoryOwner } = data;
-            
-              return (
-                <React.Fragment>
-                  <img src={repositoryOwner.avatarUrl} width={100} alt="GitHub logo" />
-                  <span>{repositoryOwner.name}</span>
-                  <p>{repositoryOwner.bio}</p>
-                  <span>{repositoryOwner.location}</span>
-                  <a href={repositoryOwner.websiteUrl}>WebSite</a>
-                  <span>{repositoryOwner.company}</span>
-                  <span>{repositoryOwner.location}</span>
-                  <br />
-                  -----------------
-                  <br />
-                  <span>Followers: {repositoryOwner.followers.totalCount}</span>
-                  <span>Followings: {repositoryOwner.following.totalCount}</span>
-                  <button type="button" onClick={history.back}>
-                    Back
-                  </button>
-                </React.Fragment>
-              );
+
+              return <UserSidebar data={repositoryOwner} />;
             }
+            return true;
           }}
         </Query>
       </HomeStyles>

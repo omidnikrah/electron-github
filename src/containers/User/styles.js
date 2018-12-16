@@ -2,82 +2,81 @@
 import styled from 'styled-components';
 import RightArrowIcon from './assets/right.svg';
 
-export default styled.div`
+export default styled.div `
   text-align: center;
   padding: 50px;
   position: relative;
   height: 100%;
-  .github--logo {
+  #user-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #fff;
+    width: 250px;
+    box-shadow: 5px 0 10px rgba(0,0,0,0.01);
+    padding: 50px 20px;
+  }
+  .user-avatar {
+    margin: 0;
     width: 150px;
-    display: block;
+    height: 150px;
+    border-radius: 10rem;
+    box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
+    overflow: hidden;
     margin: 0 auto;
-    margin-bottom: 50px;
-    opacity: 0.05;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
-  .title {
-    font-size: 16px;
-    color: #929292;
-    font-weight: 100;
-    cursor: default;
-  }
-  .search--form {
-    width: 300px;
-    display: block;
-    margin: 0 auto;
-    .input-wrapper {
-      position: relative;
-      .search--submit {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translate(0, -50%);
-        appearance: none;
-        border: 0;
-        outline: 0;
-        width: 20px;
-        height: 17px;
-        opacity: 0.3;
-        cursor: pointer;
-        transition: all 200ms ease;
-        background: url(${RightArrowIcon}) no-repeat center/cover transparent;
+  .user-details {
+      text-align: center;
+      margin-top: 20px;
+      .user-name {
+        font-weight: bold;
+        font-size: 25px;
+        line-height: 1;
       }
-      .search--input {
-        width: 100%;
-        padding: 15px 35px;
-        border: 0;
-        background: #efefef;
-        border-radius: 5px;
+      .user-username {
         font-size: 13px;
-        text-align: center;
-        outline: 0;
-        color: #444;
-        &[value=""] {
-          & + .search--submit {
-            opacity: 0;
-            transform: translate(-5px, -50%);
-            visibility: hidden;
-          }
+        font-weight: 100;
+        opacity: 0.5;
+      }
+     .user-bio {
+       font-size: 14px;
+       font-weight: 100;
+       margin-top: 20px;
+     }
+     .user-website {
+       display: block;
+     }
+    }
+    ul.user-info {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px dashed rgba(0,0,0,0.05);
+      width: 100%;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      li {
+        display: inline-flex;
+        align-items: center;
+        &:not(:last-child) {
+          margin-bottom: 15px;
+        }
+        img {
+          width: 15px;
+        }
+        span, a {
+          margin-left: 10px;
+          text-align: left;
+          color: #444;
+          font-size: 14px;
+          font-weight: 100;
         }
       }
     }
-  }
-  .search-result {
-    overflow-y: scroll;
-    height: 360px;
-    max-width: 400px;
-    margin: 30px auto 0;
-  }
-  .loading {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0px;
-    background: -moz-linear-gradient(top, rgba(250,250,250,0) 0%, rgba(250,250,250,0.02) 1%, rgba(250,250,250,0.85) 48%, rgba(250,250,250,1) 100%);
-    background: -webkit-linear-gradient(top, rgba(250,250,250,0) 0%,rgba(250,250,250,0.02) 1%,rgba(250,250,250,0.85) 48%,rgba(250,250,250,1) 100%);
-    background: linear-gradient(to bottom, rgba(250,250,250,0) 0%,rgba(250,250,250,0.02) 1%,rgba(250,250,250,0.85) 48%,rgba(250,250,250,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fafafa', endColorstr='#fafafa',GradientType=0 );
-    padding: 25px 50px;
-    line-height: 1;
-    width: 400px;
-  }
 `;

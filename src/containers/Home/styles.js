@@ -19,6 +19,7 @@ export default styled.div`
     color: #929292;
     font-weight: 100;
     cursor: default;
+    margin-bottom: 20px;
   }
   .search--form {
     width: 300px;

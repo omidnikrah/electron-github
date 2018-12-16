@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import RightArrowIcon from "./assets/right.svg";
 
-export default styled.div`
+export default styled.aside`
   position: fixed;
   top: 0;
   left: 0;

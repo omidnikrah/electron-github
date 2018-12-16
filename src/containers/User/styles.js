@@ -7,76 +7,29 @@ export default styled.div `
   padding: 50px;
   position: relative;
   height: 100%;
-  #user-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    background-color: #fff;
-    width: 250px;
-    box-shadow: 5px 0 10px rgba(0,0,0,0.01);
-    padding: 50px 20px;
-  }
-  .user-avatar {
-    margin: 0;
-    width: 150px;
-    height: 150px;
-    border-radius: 10rem;
-    box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
-    overflow: hidden;
-    margin: 0 auto;
-    img {
+  #repositories-container {
+    width: calc(100% - 250px);
+    float: right;
+    #repositories--header {
+      display: inline-block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  .user-details {
-      text-align: center;
-      margin-top: 20px;
-      .user-name {
-        font-weight: bold;
-        font-size: 25px;
-        line-height: 1;
+      text-align: left;
+      h3 {
+        font-weight: 100;
+        letter-spacing: 3px;
+        font-size: 18px;
       }
-      .user-username {
+      span {
         font-size: 13px;
         font-weight: 100;
-        opacity: 0.5;
-      }
-     .user-bio {
-       font-size: 14px;
-       font-weight: 100;
-       margin-top: 20px;
-     }
-     .user-website {
-       display: block;
-     }
-    }
-    ul.user-info {
-      margin-top: 30px;
-      padding-top: 30px;
-      border-top: 1px dashed rgba(0,0,0,0.05);
-      width: 100%;
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      li {
-        display: inline-flex;
-        align-items: center;
-        &:not(:last-child) {
-          margin-bottom: 15px;
-        }
-        img {
-          width: 15px;
-        }
-        span, a {
-          margin-left: 10px;
-          text-align: left;
-          color: #444;
-          font-size: 14px;
-          font-weight: 100;
-        }
+        color: #afafaf;
+        letter-spacing: 1.2px;
       }
     }
+    #repositories--item {
+      margin: 40px -10px;
+      overflow-y: scroll;
+      height: 81.4vh;
+    }
+  }
 `;

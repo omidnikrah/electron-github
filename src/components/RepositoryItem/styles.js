@@ -13,6 +13,7 @@ export default styled.div`
   height: 200px;
   vertical-align: top;
   text-align: left;
+  float: left;
   background-color: #fff;
   overflow: hidden;
   position: relative;

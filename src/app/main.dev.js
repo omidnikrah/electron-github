@@ -3,6 +3,7 @@
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { pathExists } from 'fs-extra-p';
 
 export default class AppUpdater {
   constructor() {

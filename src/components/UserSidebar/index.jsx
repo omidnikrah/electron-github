@@ -14,7 +14,7 @@ export default ({ data }: any) => (
     <div className="user-details">
       <h1 className="user-name">{data.name}</h1>
       <span className="user-username">@{data.login}</span>
-      <p className="user-bio">{data.bio}</p>
+      {data.bio && <p className="user-bio">{data.bio}</p>}
     </div>
     <ul className="user-info">
       {data.location && (
@@ -31,7 +31,11 @@ export default ({ data }: any) => (
             href={`https://${data.websiteUrl}`}
             onClick={e => {
               e.preventDefault();
-              shell.openExternal(`https://${data.websiteUrl}`);
+              shell.openExternal(
+                data.websiteUrl.includes("http")
+                  ? data.websiteUrl
+                  : `https://${data.websiteUrl}`
+              );
             }}
           >
             WebSite

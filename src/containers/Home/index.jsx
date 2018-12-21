@@ -1,23 +1,23 @@
 // @flow
-import React, { Component } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { Form, Field } from 'react-final-form';
-import gql from 'graphql-tag';
-import { Query, withApollo } from 'react-apollo';
-import Loading from '../../components/Loading';
-import githubLogo from './assets/logo.svg';
-import HomeStyles from './styles';
-import UserItem from './components/UserItem';
+import React, { Component } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { Form, Field } from "react-final-form";
+import gql from "graphql-tag";
+import { Query, withApollo } from "react-apollo";
+import Loading from "../../components/Loading";
+import githubLogo from "./assets/logo.svg";
+import HomeStyles from "./styles";
+import UserItem from "./components/UserItem";
 
 type Props = {
-  client : any
+  client: any
 };
 
 type State = {
-  loading : boolean,
-  searchTerm : string,
-  searchList : any,
-  pagination : any,
+  loading: boolean,
+  searchTerm: string,
+  searchList: any,
+  pagination: any
 };
 
 const SEARCH_USER = gql`
@@ -48,16 +48,19 @@ class HomePage extends Component<Props, State> {
     super(props);
     this.state = {
       loading: false,
-      searchTerm: '',
+      searchTerm: "",
       searchList: [],
-      pagination: [],
+      pagination: []
     };
     this.resultElem = React.createRef();
   }
 
   componentDidMount() {
     if (this.resultElem.current) {
-      this.resultElem.current.addEventListener('scroll', this.handleResultScrolling);
+      this.resultElem.current.addEventListener(
+        "scroll",
+        this.handleResultScrolling
+      );
     }
   }
 
@@ -65,7 +68,7 @@ class HomePage extends Component<Props, State> {
     const { client } = this.props;
     this.setState({
       loading: true,
-      searchTerm: username,
+      searchTerm: username
     });
     client
       .query({
@@ -78,7 +81,7 @@ class HomePage extends Component<Props, State> {
         this.setState({
           loading: false,
           searchList: data.search.edges,
-          pagination: data.search.pageInfo,
+          pagination: data.search.pageInfo
         });
       })
       .catch(err => {
@@ -94,14 +97,14 @@ class HomePage extends Component<Props, State> {
         query: SEARCH_USER,
         variables: {
           username,
-          nextPage,
+          nextPage
         }
       })
       .then(({ data }) => {
         this.setState(({ searchList }) => ({
           loading: false,
           searchList: [...searchList, ...data.search.edges],
-          pagination: data.search.pageInfo,
+          pagination: data.search.pageInfo
         }));
       })
       .catch(err => {
@@ -109,15 +112,19 @@ class HomePage extends Component<Props, State> {
       });
   };
 
-  handleResultScrolling = ({ target } : any) => {
+  handleResultScrolling = ({ target }: any) => {
     const { scrollHeight, scrollTop } = target;
-    const { pagination: { hasNextPage, endCursor }, loading, searchTerm } = this.state;
-    if (hasNextPage && !loading && (scrollTop >= (scrollHeight - 500))) {
+    const {
+      pagination: { hasNextPage, endCursor },
+      loading,
+      searchTerm
+    } = this.state;
+    if (hasNextPage && !loading && scrollTop >= scrollHeight - 500) {
       this.loadMore(searchTerm, endCursor);
     }
   };
 
-  resultElem : any;
+  resultElem: any;
 
   render() {
     const { loading, searchList } = this.state;
@@ -146,20 +153,21 @@ class HomePage extends Component<Props, State> {
             </form>
           )}
         />
-        <TransitionGroup component={null}>
-          {loading && (
-            <CSSTransition timeout={350} classNames="fade">
-              <div className="loading"><Loading /></div>
-            </CSSTransition>
-          )}
-        </TransitionGroup>
         <div className="search-result" ref={this.resultElem}>
           {searchList.length > 0 &&
             searchList.map((searchItem: any, index: any) => (
               <UserItem data={searchItem.node} key={index} />
             ))}
+          <TransitionGroup component={null}>
+            {loading && (
+              <CSSTransition timeout={350} classNames="fade">
+                <div className="loading">
+                  <Loading />
+                </div>
+              </CSSTransition>
+            )}
+          </TransitionGroup>
         </div>
-
         {/* <Query query={SEARCH_USER} variables={{ username: 'omid' }}>
           {({ loading, error, data }) => {
             if (loading) return 'Loading...';

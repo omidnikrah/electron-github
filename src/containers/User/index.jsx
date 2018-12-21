@@ -1,14 +1,14 @@
 // @flow
-import React, { Component, Fragment } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { Form, Field } from 'react-final-form';
-import gql from 'graphql-tag';
-import { Query, withApollo } from 'react-apollo';
-import Loading from '../../components/Loading';
-import RepositoryItem from '../../components/RepositoryItem';
-import UserPageStyles from './styles';
-import UserItem from './components/UserItem';
-import UserSidebar from '../../components/UserSidebar';
+import React, { Component, Fragment } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { Form, Field } from "react-final-form";
+import gql from "graphql-tag";
+import { Query, withApollo } from "react-apollo";
+import Loading from "../../components/Loading";
+import RepositoriesWrapper from "./components/RepositoriesWrapper";
+import UserPageStyles from "./styles";
+import UserItem from "./components/UserItem";
+import UserSidebar from "../../components/UserSidebar";
 
 type Props = {
   client: any,
@@ -17,13 +17,12 @@ type Props = {
 
 type State = {
   loading: boolean,
-  searchTerm: string,
-  searchList: any,
+  repositories: any,
   pagination: any
 };
 
 const GET_USER = gql`
-  query($username: String!) {
+  query($username: String!, $nextPage: String) {
     repositoryOwner(login: $username) {
       login
       ... on User {
@@ -34,7 +33,15 @@ const GET_USER = gql`
         websiteUrl
         location
         company
-        repositories(first: 100) {
+        repositories(
+          first: 100
+          after: $nextPage
+          orderBy: { field: UPDATED_AT, direction: DESC }
+        ) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           totalCount
           nodes {
             name
@@ -61,6 +68,14 @@ const GET_USER = gql`
 `;
 
 class UserPage extends Component<Props, State> {
+  state = {
+    loading: false,
+    repositories: [],
+    pagination: []
+  };
+
+  repositoriesElem: any;
+
   render() {
     const {
       match: {
@@ -69,30 +84,61 @@ class UserPage extends Component<Props, State> {
     } = this.props;
     return (
       <UserPageStyles>
-        <Query query={GET_USER} variables={{ username }}>
-          {({ loading, error, data }) => {
+        <Query query={GET_USER} variables={{ username, nextPage: null }}>
+          {({ loading, error, data, fetchMore }) => {
             if (loading) return <Loading />;
             if (error) return `Error! ${error.message}`;
 
             if (data) {
               const { repositoryOwner } = data;
-
-              return (
-                <Fragment>
-                  <UserSidebar data={repositoryOwner} />
-                  <div id="repositories-container">
-                    <header id="repositories--header">
-                      <h3>Respositories</h3>
-                      <span>{repositoryOwner.repositories.totalCount} repositories has created so far</span>
-                    </header>
-                    <div id="repositories--item">
-                      {repositoryOwner.repositories.nodes.map((repository : any, index : number) => (
-                        <RepositoryItem data={repository} key={index} />
-                      ))}
+              if (repositoryOwner) {
+                return (
+                  <Fragment>
+                    <UserSidebar data={repositoryOwner} />
+                    <div id="repositories-container">
+                      <header id="repositories--header">
+                        <h3>Respositories</h3>
+                        <span>
+                          {repositoryOwner.repositories.totalCount} repositories
+                          has created so far
+                        </span>
+                      </header>
+                      <RepositoriesWrapper
+                        data={repositoryOwner.repositories.nodes}
+                        hasLoadMore={
+                          repositoryOwner.repositories.pageInfo.hasNextPage
+                        }
+                        onLoadMore={() => {
+                          fetchMore({
+                            variables: {
+                              nextPage:
+                                repositoryOwner.repositories.pageInfo.endCursor
+                            },
+                            updateQuery: (prev, { fetchMoreResult }) => {
+                              if (!fetchMoreResult) return prev;
+                              return {
+                                repositoryOwner: {
+                                  ...prev.repositoryOwner,
+                                  repositories: {
+                                    ...fetchMoreResult.repositoryOwner
+                                      .repositories,
+                                    nodes: [
+                                      ...prev.repositoryOwner.repositories
+                                        .nodes,
+                                      ...fetchMoreResult.repositoryOwner
+                                        .repositories.nodes
+                                    ]
+                                  }
+                                }
+                              };
+                            }
+                          });
+                        }}
+                      />
                     </div>
-                  </div>
-                </Fragment>
-              );
+                  </Fragment>
+                );
+              }
             }
             return true;
           }}
@@ -102,4 +148,4 @@ class UserPage extends Component<Props, State> {
   }
 }
 
-export default withApollo(UserPage);
+export default UserPage;

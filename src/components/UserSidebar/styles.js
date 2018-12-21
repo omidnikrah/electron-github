@@ -87,6 +87,7 @@ export default styled.aside`
     font-size: 12px;
     color: #555;
     cursor: pointer;
+    outline: 0;
     &::after {
       content: "";
       position: absolute;

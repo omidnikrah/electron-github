@@ -28,7 +28,6 @@ export default styled.div `
     }
     #repositories--item {
       margin: 40px -10px;
-      overflow-y: scroll;
       height: 81.4vh;
     }
   }

@@ -68,17 +68,4 @@ export default styled.div`
     max-width: 400px;
     margin: 30px auto 0;
   }
-  .loading {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0px;
-    background: -moz-linear-gradient(top, rgba(250,250,250,0) 0%, rgba(250,250,250,0.02) 1%, rgba(250,250,250,0.85) 48%, rgba(250,250,250,1) 100%);
-    background: -webkit-linear-gradient(top, rgba(250,250,250,0) 0%,rgba(250,250,250,0.02) 1%,rgba(250,250,250,0.85) 48%,rgba(250,250,250,1) 100%);
-    background: linear-gradient(to bottom, rgba(250,250,250,0) 0%,rgba(250,250,250,0.02) 1%,rgba(250,250,250,0.85) 48%,rgba(250,250,250,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00fafafa', endColorstr='#fafafa',GradientType=0 );
-    padding: 25px 50px;
-    line-height: 1;
-    width: 400px;
-  }
 `;

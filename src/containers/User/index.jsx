@@ -1,17 +1,13 @@
 // @flow
 import React, { Component, Fragment } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { Form, Field } from "react-final-form";
 import gql from "graphql-tag";
-import { Query, withApollo } from "react-apollo";
+import { Query } from "react-apollo";
 import Loading from "../../components/Loading";
 import RepositoriesWrapper from "./components/RepositoriesWrapper";
 import UserPageStyles from "./styles";
-import UserItem from "./components/UserItem";
 import UserSidebar from "../../components/UserSidebar";
 
 type Props = {
-  client: any,
   match: any
 };
 
@@ -68,12 +64,6 @@ const GET_USER = gql`
 `;
 
 class UserPage extends Component<Props, State> {
-  state = {
-    loading: false,
-    repositories: [],
-    pagination: []
-  };
-
   repositoriesElem: any;
 
   render() {

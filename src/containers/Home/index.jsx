@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Form, Field } from "react-final-form";
 import gql from "graphql-tag";
-import { Query, withApollo } from "react-apollo";
+import { withApollo } from "react-apollo";
 import Loading from "../../components/Loading";
 import githubLogo from "./assets/logo.svg";
 import HomeStyles from "./styles";
@@ -44,6 +44,8 @@ const SEARCH_USER = gql`
 `;
 
 class HomePage extends Component<Props, State> {
+  resultElem: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -83,6 +85,7 @@ class HomePage extends Component<Props, State> {
           searchList: data.search.edges,
           pagination: data.search.pageInfo
         });
+        return data;
       })
       .catch(err => {
         console.warn(err);
@@ -106,6 +109,7 @@ class HomePage extends Component<Props, State> {
           searchList: [...searchList, ...data.search.edges],
           pagination: data.search.pageInfo
         }));
+        return data;
       })
       .catch(err => {
         console.warn(err);
@@ -123,8 +127,6 @@ class HomePage extends Component<Props, State> {
       this.loadMore(searchTerm, endCursor);
     }
   };
-
-  resultElem: any;
 
   render() {
     const { loading, searchList } = this.state;
@@ -156,7 +158,8 @@ class HomePage extends Component<Props, State> {
         <div className="search-result" ref={this.resultElem}>
           {searchList.length > 0 &&
             searchList.map((searchItem: any, index: any) => (
-              <UserItem data={searchItem.node} key={index} />
+              // eslint-disable-next-line react/no-array-index-key
+              <UserItem data={searchItem.node} key={`user-item--${index}`} />
             ))}
           <TransitionGroup component={null}>
             {loading && (

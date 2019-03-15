@@ -25,7 +25,7 @@ export default styled.div `
         letter-spacing: 1.2px;
       }
     }
-    #repositories--item {
+    #users--item {
       margin: 40px -10px;
       height: 81.4vh;
     }

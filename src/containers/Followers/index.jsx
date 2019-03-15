@@ -6,6 +6,7 @@ import gql from "graphql-tag";
 import { Query, withApollo } from "react-apollo";
 import Loading from "../../components/Loading";
 import UserSidebar from "../../components/UserSidebar";
+import UsersWrapper from "../../components/UsersWrapper";
 import FollowersWrapper from './styles';
 
 const GET_FOLLOWERS = gql`
@@ -25,6 +26,10 @@ const GET_FOLLOWERS = gql`
         }
         followers(first: 100, after: $nextPage) {
           totalCount
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           nodes {
             name
             login
@@ -63,7 +68,38 @@ const FollowersPage = (props : any) => {
                     <header id="repositories--header">
                       <h3>Followers</h3>
                     </header>
-                    
+                    <UsersWrapper
+                      data={repositoryOwner.followers.nodes}
+                      hasLoadMore={
+                        repositoryOwner.followers.pageInfo.hasNextPage
+                      }
+                      onLoadMore={() => {
+                        fetchMore({
+                          variables: {
+                            nextPage:
+                              repositoryOwner.followers.pageInfo.endCursor
+                          },
+                          updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev;
+                            return {
+                              repositoryOwner: {
+                                ...prev.repositoryOwner,
+                                followers: {
+                                  ...fetchMoreResult.repositoryOwner
+                                    .followers,
+                                  nodes: [
+                                    ...prev.repositoryOwner.followers
+                                      .nodes,
+                                    ...fetchMoreResult.repositoryOwner
+                                      .followers.nodes
+                                  ]
+                                }
+                              }
+                            };
+                          }
+                        });
+                      }}
+                    />
                   </div>
                 </Fragment>
               );

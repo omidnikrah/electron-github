@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React from "react";
 import { shell } from "electron";
 import UserSidebarStyles from "./styles";
 import linkIcon from "./assets/link.svg";
@@ -57,7 +57,7 @@ export default ({ data }: any) => (
         <span>{data.following.totalCount}</span>Followings
       </span>
     </div>
-    <button className="back-btn" type="button" onClick={history.back}>
+    <button className="back-btn" type="button" onClick={window.history.back}>
       Back
     </button>
   </UserSidebarStyles>

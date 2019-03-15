@@ -109,13 +109,27 @@ export default styled.aside`
     right: 0;
     left: 0;
     display: flex;
-    & > span {
+    & > a {
       flex: 1;
       text-align: center;
       padding: 10px 0;
       font-size: 12px;
       font-weight: 100;
       color: #c1c1c1;
+      transition: color 200ms ease;
+      &:hover {
+        color: #848484;
+        span {
+          color: #848484;
+        }
+      }
+      &.active {
+        color: #848484;
+        pointer-events: none;
+        span {
+          color: #848484;
+        }
+      }
       &:not(:last-child) {
         position: relative;
         &::after {
@@ -134,6 +148,8 @@ export default styled.aside`
         color: #b9b9b9;
         font-size: 20px;
         font-weight: bold;
+        cursor: pointer;
+        transition: color 200ms ease;
       }
     }
   }

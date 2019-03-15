@@ -6,9 +6,9 @@ import gql from "graphql-tag";
 import { Query, withApollo } from "react-apollo";
 import Loading from "../../components/Loading";
 import UserSidebar from "../../components/UserSidebar";
-import FollowersWrapper from './styles';
+import FollowingsWrapper from './styles';
 
-const GET_FOLLOWERS = gql`
+const GET_FOLLOWINGS = gql`
   query($username: String!, $nextPage: String) {
     repositoryOwner(login: $username) {
       login
@@ -20,10 +20,10 @@ const GET_FOLLOWERS = gql`
         websiteUrl
         location
         company
-        following {
+        followers {
           totalCount
         }
-        followers(first: 100, after: $nextPage) {
+        following(first: 100, after: $nextPage) {
           totalCount
           nodes {
             name
@@ -40,15 +40,15 @@ const GET_FOLLOWERS = gql`
 `;
 
 
-const FollowersPage = (props : any) => {
+const FollowingsPage = (props : any) => {
   const {
     match: {
       params: { username }
     }
   } = props;
   return (
-    <FollowersWrapper>
-      <Query query={GET_FOLLOWERS} variables={{ username, nextPage: null }}>
+    <FollowingsWrapper>
+      <Query query={GET_FOLLOWINGS} variables={{ username, nextPage: null }}>
         {({ loading, error, data, fetchMore }) => {
           if (loading) return <Loading />;
           if (error) return `Error! ${error.message}`;
@@ -58,10 +58,10 @@ const FollowersPage = (props : any) => {
             if (repositoryOwner) {
               return (
                 <Fragment>
-                  <UserSidebar data={repositoryOwner} isFollowersPage />
+                  <UserSidebar data={repositoryOwner} isFollowingsPage />
                   <div id="repositories-container">
                     <header id="repositories--header">
-                      <h3>Followers</h3>
+                      <h3>Followings</h3>
                     </header>
                     
                   </div>
@@ -72,8 +72,8 @@ const FollowersPage = (props : any) => {
           return true;
         }}
       </Query>
-    </FollowersWrapper>
+    </FollowingsWrapper>
   );
 }
 
-export default FollowersPage;
+export default FollowingsPage;

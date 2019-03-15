@@ -1,12 +1,13 @@
 // @flow
 import React from "react";
 import { shell } from "electron";
+import { Link } from 'react-router-dom';
 import UserSidebarStyles from "./styles";
 import linkIcon from "./assets/link.svg";
 import bagIcon from "./assets/bag.svg";
 import locationIcon from "./assets/location.svg";
 
-export default ({ data }: any) => (
+export default ({ data, isFollowingsPage, isFollowersPage }: any) => (
   <UserSidebarStyles>
     <figure className="user-avatar">
       <img src={data.avatarUrl} alt={data.name} />
@@ -50,12 +51,12 @@ export default ({ data }: any) => (
       )}
     </ul>
     <div className="user-followers--wrapper">
-      <span>
+      <Link className={isFollowersPage ? 'active' : ''} to={`/followers/${data.login}`}>
         <span>{data.followers.totalCount}</span>Followers
-      </span>
-      <span>
+      </Link>
+      <Link className={isFollowingsPage ? 'active' : ''} to={`/followings/${data.login}`}>
         <span>{data.following.totalCount}</span>Followings
-      </span>
+      </Link>
     </div>
     <button className="back-btn" type="button" onClick={window.history.back}>
       Back

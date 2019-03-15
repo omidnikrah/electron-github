@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React from "react";
 import StarIcon from "./assets/star.svg";
 import ForkIcon from "./assets/fork.svg";
 import RepositoryItemStyles from "./styles";

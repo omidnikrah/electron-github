@@ -8,37 +8,37 @@ import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemo
 import Routes from './Routes';
 
 type Props = {
-  store: any,
-  history: {}
+	store: any,
+	history: {}
 };
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData: {
-    __schema: {
-      types: [], // no types provided
-    },
-  },
+	introspectionQueryResultData: {
+		__schema: {
+			types: [] // no types provided
+		}
+	}
 });
 
 const cache = new InMemoryCache({ fragmentMatcher });
 
-const client = new ApolloClient({ 
-  uri: 'https://api.github.com/graphql',
-  headers: {
-    Authorization: `bearer 4479095b399544c9ca9c8d80ff7d10f6fc364946`
-  },
-  cache,
- });
+const client = new ApolloClient({
+	uri: 'https://api.github.com/graphql',
+	headers: {
+		Authorization: `bearer d02f91b990bf37b75caed8343f6ea7519eaadb62`
+	},
+	cache
+});
 
 export default class Root extends Component<Props> {
-  render() {
-    const { history } = this.props;
-    return (
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </ApolloProvider>
-    );
-  }
+	render() {
+		const { history } = this.props;
+		return (
+			<ApolloProvider client={client}>
+				<BrowserRouter>
+					<Routes />
+				</BrowserRouter>
+			</ApolloProvider>
+		);
+	}
 }

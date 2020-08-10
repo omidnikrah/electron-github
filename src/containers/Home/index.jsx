@@ -171,18 +171,6 @@ class HomePage extends Component<Props, State> {
             )}
           </TransitionGroup>
         </div>
-        {/* <Query query={SEARCH_USER} variables={{ username: 'omid' }}>
-          {({ loading, error, data }) => {
-            if (loading) return 'Loading...';
-            if (error) return `Error! ${error.message}`;
-
-            const userList = data.search.edges.map((user : any, index : any) => (
-              <UserItem data={user.node} key={index} />
-            ));
-            
-            return <div className="search-result">{userList}</div>;
-          }}
-        </Query> */}
       </HomeStyles>
     );
   }
